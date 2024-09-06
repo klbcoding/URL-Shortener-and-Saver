@@ -101,3 +101,6 @@ This file contains all the unit tests using `pytest`. Multiple assert statements
 ### requirements.txt
 This file contains the names of the libraries used, and their versions.
 
+
+Copyright © 2024 Beh Kai Le Rinchen  
+All rights reserved. No part of this software may be copied, redistributed or modified without written permission from the copyright owner.
