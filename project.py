@@ -21,27 +21,29 @@ def main():
         print(display_table())
         while True:
             query = input("Press 'd' to delete fields, 'e' to exit: ")
-            if query.lower() in ("d", "e"):
-                break
+            if query.lower() == "e":
+                print("Goodbye.")
+                sys.exit()
+            elif query.lower() == "d":
+                while True:
+                    try:
+                        delete_id = input("Enter the id of the url to delete (Press 'c' to cancel): ")
+                        if delete_id.lower() == "c":
+                            break
+                        int(delete_id)
+                    except ValueError:
+                        print("Must be a positive integer.")
+                    else:
+                    # check if id exists in table
+                        if db.execute("SELECT * FROM url WHERE id = ?", delete_id):
+                            # if SELECT returns a non-empty result set, an id exists in the table.
+                            # Hence, we can proceed to run the delete statement.
+                            db.execute("DELETE FROM url WHERE id = ?", delete_id)
+                            print("URL deleted.")
+                            break
+                        print("id not in database.")
             else:
-                print("Invalid input")
-        if query.lower() == "e":
-            sys.exit()
-        elif query.lower() == "d":
-            while True:
-                try:
-                    delete_id = int(input("Enter the id of the url to delete: "))
-                except ValueError:
-                    print("Must be a positive integer")
-                    continue
-                if db.execute("SELECT * FROM url WHERE id = ?", delete_id):
-                    break
-                else:
-                    print("id not in database.")
-
-            #after checking for valid inputs, delete the values associated with the id
-            db.execute("DELETE FROM url WHERE id = ?", delete_id)
-            print("URL deleted.")
+                print("Invalid input.")
 
     elif sys.argv[1].lower() == "s":
         input_url = url_checker(input("Enter URL: "))
